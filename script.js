@@ -11,9 +11,10 @@ const query = `
 
 
 const url =
-  `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?` +
-  `sheet=${encodeURIComponent(SHEET_NAME)}` +
-  `&tq=${encodeURIComponent(query)}`;
+  https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq? +
+  sheet=${encodeURIComponent(SHEET_NAME)} +
+  &tq=${encodeURIComponent(query)} +
+  &cachebuster=${Date.now()};
 
 fetch(url)
   .then(res => res.text())
@@ -172,5 +173,6 @@ tbody.innerHTML += `<tr class="${rank.className}">${rowHtml}</tr>`;
     btn.onclick = () => loadMoreRows(10);
   }
 }
+
 
 
