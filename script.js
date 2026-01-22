@@ -10,6 +10,45 @@ const contributors = [
   "Zares"
 ];
 
+// Avatary YouTube są teraz załadowane bezpośrednio z HTML-u
+// Avatary są teraz załadowane bezpośrednio z HTML (src atrybutu)
+// Te funkcje nie są już potrzebne - avatary są już wstawione w index.html
+function loadYouTubeAvatars() {
+  // Avatary są już załadowane w HTML-u z bezpośrednimi URL-ami YouTube
+  // Dodaj fallback na wypadek, gdyby jakiś URL nie zadziałał
+  const avatarMapping = {
+    'lanos': 'https://yt3.googleusercontent.com/ytc/AIdro_n5T29uIFdoe4_CuNNbKOwiNAEedyfLIUs3iP-C1igGtcA=s160-c-k-c0x00ffffff-no-rj',
+    'kustosz': 'https://yt3.googleusercontent.com/NJAggX0jYv-oF7Sq7szQUMWfrTumeTiSZqbP_Gh1Wu8SZm8Q1QWKdLYesgD9ePXb4s7BN7ZONw=s160-c-k-c0x00ffffff-no-rj',
+    'zares': 'https://yt3.googleusercontent.com/ICNc38DsrSlej_U8-JLZ0T2Ou7IOMQQ-O0EMGxj51ictbJv3aiUIYHKW_hlEZOL3numiQR-8XA=s160-c-k-c0x00ffffff-no-rj'
+  };
+  
+  const youtubeUrls = {
+    'lanos': 'https://www.youtube.com/@lanos1502',
+    'kustosz': 'https://www.youtube.com/@Kustosz2137',
+    'zares': 'https://www.youtube.com/@ZaresTheDeluge'
+  };
+  
+  // Ustaw fallback dla avatarów na wypadek błędu ładowania
+  Object.entries(avatarMapping).forEach(([key, url]) => {
+    const avatarElem = document.getElementById(`avatar-${key}`);
+    if (avatarElem && avatarElem.src) {
+      avatarElem.onerror = () => {
+        // Jeśli URL się nie załaduje, spróbuj alternatywny URL
+        avatarElem.src = url;
+      };
+      
+      // Dodaj klikanie na avatar - przeniesienie do YouTube
+      avatarElem.style.cursor = 'pointer';
+      avatarElem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (youtubeUrls[key]) {
+          window.open(youtubeUrls[key], '_blank');
+        }
+      });
+    }
+  });
+}
+
 // Dźwięki
 function playSound(soundFile) {
   const audio = new Audio(soundFile);
@@ -80,11 +119,35 @@ const translations = {
     supportersButtonLabel: "Wspierający",
     contribDescKustosz: "Główny zarządca projektu The Deluge Matchmaking, zarządca infrastruktury serwerowej oraz bazy danych, programista backendu, twórca systemu rankingowego oraz mechaniki gry.",
     contribDescHawriil: "Główny zarządca i programista Discordowego bota Rozjemca, odpowiadającego za organizację meczy.",
-    contribDescShalte: "Inicjator pomysłu, i nie wiem co jeszcze.",
+    contribDescJessica: "Inicjator pomysłu, twórca regulaminu The Deluge Matchmaking",
     contribDescHromiczekk: "Główny programista frontendu, odpowiadający za strukturę strony internetowej The Deluge Matchmaking.",
     contribDescZares: "Twórca graficzny projektu, pomysłodawca.",
     contribDescLanos: "Orangutan.",
-    contribDescCiom: "Nie wiem"
+    contribDescCiom: "Nie wiem",
+    quoteKustosz: "\"Nie ważne ilu tylko gdzie. HITLERJUGEND!.\"",
+    quoteHawriil: "\"Pickup o 20:00.\"",
+    quoteJessica: "\"Kwik.\"",
+    quoteHromiczekk: "\"NIE BĘDĘ LICZYŁ\"",
+    quoteZares: "\"Wodzionka\"",
+    quoteLanos: "\"🦧\"",
+    quoteCiom: "\"Nie wiem\"",
+    creatorNameLanos: "Lanos",
+    creatorNameKustosz: "Kustosz",
+    creatorNameZares: "Zares",
+    faqTitle: "FAQ - Najczęstsze Pytania",
+    faqQuestion1: "Czym jest The Deluge Matchmaking?",
+    faqAnswer1: "Szczerze to jebać deluge",
+    faqQuestion2: "Jak działa system rankingowy?",
+    faqAnswer2: "Jestem gejem, jestem czarny i nie chodzę do kościoła",
+    faqQuestion3: "Jak zagrać mecz?",
+    faqAnswer3: "Aby zagrać mecz, włóż sobie palec do dupy i zrób 3 pajacyki",
+    faqQuestion4: "Jak dołączyć do Discord?",
+    faqAnswer4: "Link do naszego Discorda znajduje się na dole strony. Wystarczy kliknąć w ikonkę, aby zostać przekierowanym!",
+    faqQuestion5: "Jak porównać dwóch graczy?",
+    faqAnswer5: "Kliknij na gracza w tabeli, a następnie wybierz \"Dodaj do porównania\". Powtórz dla drugiego gracza i kliknij \"Porównaj\".",
+    faqQuestion6: "Gdzie mogę znaleźć więcej informacji?",
+    faqAnswer6: "Odwiedź nasz Discord lub skontaktuj się z administracją projektu. Możesz również sprawdzić sekcję 'Kontrybutorzy' aby dowiedzieć się więcej o zespole."
+
   },
   en: {
     searchPlaceholder: "Search player...",
@@ -122,12 +185,35 @@ const translations = {
     supportersButtonLabel: "Supporters",
     contribDescKustosz: "Main administrator of The Deluge Matchmaking project, server infrastructure manager and database administrator, backend programmer, creator of the ranking system and game mechanics.",
     contribDescHawriil: "Main administrator and programmer of the Discord bot Rozjemca, responsible for match organization.",
-    contribDescShalte: "Initiator of the idea, and I don't know what else.",
+    contribDescJessica: "Initiator of the idea, author of the rules for The Deluge Matchmaking",
     contribDescHromiczekk: "Main frontend programmer, responsible for the structure of The Deluge Matchmaking website.",
     contribDescZares: "Graphic designer of the project, ideator.",
     contribDescLanos: "Orangutan.",
-    contribDescCiom: "I don't know"
-  },
+    contribDescCiom: "I don't know",
+    quoteKustosz: "\"Nie ważne ilu tylko gdzie. HITLERJUGEND!.\"",
+    quoteHawriil: "\"Pickup o 20:00.\"",
+    quoteJessica: "\"Kwik.\"",
+    quoteHromiczekk: "\"NIE BĘDĘ LICZYŁ\"",
+    quoteZares: "\"Wodzionka\"",
+    quoteLanos: "\"🦧\"",
+    quoteCiom: "\"Nie wiem\"",
+    creatorNameLanos: "Lanos",
+    creatorNameKustosz: "Kustosz",
+    creatorNameZares: "Zares",
+    faqTitle: "FAQ - Frequently Asked Questions",
+    faqQuestion1: "What is The Deluge Matchmaking?",
+    faqAnswer1: "Honestly, jebać Deluge.",
+    faqQuestion2: "How does the ranking system work?",
+    faqAnswer2: "I’m gay, I’m Black, and I don’t go to church.",
+    faqQuestion3: "How do I play a match?",
+    faqAnswer3: "To play a match, stick a finger up your ass and do 3 jumping jacks.",
+    faqQuestion4: "How do I join the Discord?",
+    faqAnswer4: "The link to our Discord is at the bottom of the page. Just click the icon and you’ll be redirected!",
+    faqQuestion5: "How do I compare two players?",
+    faqAnswer5: "Click a player in the table, then choose \"Add to comparison\". Repeat for the second player and click \"Compare\".",
+    faqQuestion6: "Where can I find more information?",
+    faqAnswer6: "Visit our Discord or contact the project admins. You can also check the 'Contributors' section to learn more about the team."
+    },
   sl: {
     searchPlaceholder: "Szukej szpilera...",
     players: "Szpilery",
@@ -146,29 +232,52 @@ const translations = {
     noData: "Ni ma danych",
     loading: "Laduje…",
     notFound: "Niy ma szpilera",
-    titleMain: "Srogi Zalōnie Matchmaking",
-    titleSub: "Społycznoś hierarchijŏ i statystyki szpilery",
+    titleMain: "Sroge Zalōnie Matchmaking",
+    titleSub: "Społycznoś hierarchijŎ i statystyki szpilery",
     playerRole: "Szpiler",
     colRating: "ôcyna",
     colKills: "Zabōjstwa",
     colDeaths: "Śmierći",
-    colTeamkills: "Zabōjstwa zwōlynników",
+    colTeamkills: "Zabōjstwa zwōlynnikōw",
     colWins: "Wygrane",
     colLosses: "Niderlagi",
     colMatches: "Mecze",
     colKD: "KD",
     colWinrate: "Zwyciyjnstwo %",
-    supportersContributors: "Kontrybutorzy",
-    supportersCreators: "Kreatorzy Treści",
-    supportersLeader: "Lider Projektu",
-    supportersButtonLabel: "Wspierający",
-    contribDescKustosz: "Główny zarządca projektu The Deluge Matchmaking, zarządca infrastruktury serwerowej oraz bazy danych, programista backendu, twórca systemu rankingowego oraz mechaniki gry.",
-    contribDescHawriil: "Główny zarządca i programista Discordowego bota Rozjemca, odpowiadającego za organizację meczy.",
-    contribDescShalte: "Inicjator pomysłu, i nie wiem co jeszcze.",
-    contribDescHromiczekk: "Główny programista frontendu, odpowiadający za strukturę strony internetowej The Deluge Matchmaking.",
-    contribDescZares: "Twórca graficzny projektu, pomysłodawca.",
-    contribDescLanos: "Orangutan.",
-    contribDescCiom: "Nie wiem"
+    supportersContributors: "Kōntrybutŏrzy",
+    supportersCreators: "Kreatŏrzy inhaltōw",
+    supportersLeader: "lajter projektu",
+    supportersButtonLabel: "spiyrajōncy",
+    contribDescKustosz: "Gōwny administratōr projektu Sroge Zalōnie Matchmaking,administrator infrastrutury serwerowyj a bazy danych, programiŏrz backendutwōrca systymu hierarchiji a funkcji szpilu.",
+    contribDescHawriil: "Gōwny administratōr i programiŏrz Discordowygo bota Rozjemca, lajter za ôrganizacyjã meczy.",
+    contribDescJessica: "Inicjator idyje, twōrca regulaminu Sroge Zalōnie Matchmaking.",
+    contribDescHromiczekk: "Gōwny programiŏrz frontendu, lajter za sztrukturã strōny internetowyj Sroge Zalōnie Matchmaking.",
+    contribDescZares: "Twōrca graficzny projektu, idyjodŏwca.",
+    contribDescLanos: "Ôrangutan.",
+    contribDescCiom: "Niy wiã",
+    quoteKustosz: "\"Nie ważne ilu tylko gdzie. HITLERJUGEND!.\"",
+    quoteHawriil: "\"Pickup o 20:00.\"",
+    quoteJessica: "\"Kwik.\"",
+    quoteHromiczekk: "\"NIE BĘDĘ LICZYŁ\"",
+    quoteZares: "\"Wodzionka\"",
+    quoteLanos: "\"🦧\"",
+    quoteCiom: "\"Nie wiem\"",
+    creatorNameLanos: "Lanos",
+    creatorNameKustosz: "Kustosz",
+    creatorNameZares: "Zares",
+    faqTitle: "FAQ - Czasto Pytane Rzeczy",
+    faqQuestion1: "Czym jest The Deluge Matchmaking?",
+    faqAnswer1: "Szczerze to jebać deluge",
+    faqQuestion2: "Jak działa system rankingowy?",
+    faqAnswer2: "Jestem gejem, jestem czarny i nie chodzę do kościoła",
+    faqQuestion3: "Jak zagrać mecz?",
+    faqAnswer3: "Aby zagrać mecz, włóż sobie palec do dupy i zrób 3 pajacyki",
+    faqQuestion4: "Jak dołączyć do Discord?",
+    faqAnswer4: "Link do naszego Discorda znajduje się na dole strony. Wystarczy kliknąć w ikonkę, aby zostać przekierowanym!",
+    faqQuestion5: "Jak porównać dwóch graczy?",
+    faqAnswer5: "Kliknij na gracza w tabeli, a następnie wybierz \"Dodaj do porównania\". Powtórz dla drugiego gracza i kliknij \"Porównaj\".",
+    faqQuestion6: "Gdzie mogę znaleźć więcej informacji?",
+    faqAnswer6: "Odwiedź nasz Discord lub skontaktuj się z administracją projektu. Możesz również sprawdzić sekcję 'Kontrybutorzy' aby dowiedzieć się więcej o zespole."
   }
 };
 
@@ -196,7 +305,7 @@ function applyTranslations() {
   // Aktualizuj tytuł główny
   const titleElement = document.getElementById('title-main');
   if (titleElement) {
-    const prefix = currentLanguage === 'sl' ? 'Srogi Zalōnie ' : 'The Deluge ';
+    const prefix = currentLanguage === 'sl' ? 'Sroge Zalōnie ' : 'The Deluge ';
     titleElement.innerHTML = prefix + 'Matchma<span class="easter-k">k</span>ing';
   }
   
@@ -338,12 +447,6 @@ function applyTranslations() {
     supportersCreatorsTitle.textContent = t('supportersCreators');
   }
   
-  // Aktualizuj tekst przycisku wspierajacy
-  const supportersLabelText = document.getElementById('supporters-label-text');
-  if (supportersLabelText) {
-    supportersLabelText.textContent = t('supportersButtonLabel');
-  }
-  
   // Aktualizuj opisy kontrybutorów
   document.querySelectorAll('[data-translation-key]').forEach(elem => {
     const key = elem.getAttribute('data-translation-key');
@@ -357,54 +460,36 @@ function applyTranslations() {
 window.addEventListener('load', () => {
   updateLanguageUI();
   applyTranslations();
+  loadYouTubeAvatars();
   
-  // Inicjalizuj toggle dla supporters
-  const supportersToggle = document.getElementById('supporters-toggle');
-  const supportersPanel = document.getElementById('supporters-panel');
-  const supportersClose = document.getElementById('supporters-close');
-  
-  if (supportersToggle && supportersPanel) {
-    supportersToggle.addEventListener('click', (e) => {
-      playSound('press.mp3');
-      supportersPanel.classList.toggle('active');
-      e.stopPropagation();
-    });
-  }
-  
-  if (supportersClose) {
-    supportersClose.addEventListener('click', (e) => {
-      playSound('press.mp3');
-      supportersPanel.classList.remove('active');
-      e.stopPropagation();
-    });
-  }
-  
-  // Zamknij panel gdy klikniesz poza nim
-  document.addEventListener('click', (e) => {
-    const langBtn = e.target.closest('.lang-btn');
-    if (supportersPanel && !supportersPanel.contains(e.target) && e.target !== supportersToggle && !langBtn) {
-      supportersPanel.classList.remove('active');
-    }
-  });
-  
-  // Obsługa kliknięć na kontrybutorów - pokaż/ukryj opisy
+  // Obsługa kliknięć na kontrybutorów - pokaż/ukryj opisy i cytaty
   document.querySelectorAll('.contributor-clickable').forEach(elem => {
     elem.addEventListener('click', (e) => {
       e.preventDefault();
       playSound('press.mp3');
       const contributor = elem.dataset.contributor;
       const descElem = document.getElementById(`desc-${contributor}`);
+      const quoteElem = document.getElementById(`quote-${contributor}`);
       
       if (descElem) {
-        // Zamknij wszystkie inne opisy
+        // Zamknij wszystkie inne opisy i cytaty
         document.querySelectorAll('.supporter-description.active').forEach(desc => {
           if (desc !== descElem) {
             desc.classList.remove('active');
           }
         });
+        document.querySelectorAll('.contributor-quote.active').forEach(quote => {
+          if (quote !== quoteElem) {
+            quote.classList.remove('active');
+          }
+        });
         
         // Toggle aktualny opis
         descElem.classList.toggle('active');
+        // Toggle aktualny cytat
+        if (quoteElem && quoteElem.textContent.trim()) {
+          quoteElem.classList.toggle('active');
+        }
       }
     });
   });
@@ -462,7 +547,7 @@ function getRank(elo) {
     return { name: "Dragon", color: "#0345bf", icon: "ranks/dragon.png", className: "rank-dragon" };
   }
   if (elo < 1801) {
-    return { name: "Rezun", color: "#78ab67", icon: "ranks/rezun.png", className: "rank-rezun" };
+    return { name: "Rezun", color: "#4bd51d", icon: "ranks/rezun.png", className: "rank-rezun" };
   }
   if (elo < 2001) {
     return { name: "Rajtar", color: "#3a1401", icon: "ranks/rajtar2.png", className: "rank-rajtar" };
@@ -471,13 +556,13 @@ function getRank(elo) {
     return { name: "Chorąży", color: "#ffd637", icon: "ranks/chorazy.png", className: "rank-chorazy" };
   }
   if (elo < 2401) {
-    return { name: "Oficer", color: "#321b43", icon: "ranks/oficer.png", className: "rank-oficer" };
+    return { name: "Oficer", color: "#46136a", icon: "ranks/oficer.png", className: "rank-oficer" };
   }
   if (elo < 2601) {
-    return { name: "Szlachcic", color: "#2b1c11", icon: "ranks/szlachcic.png", className: "rank-szlachcic" };
+    return { name: "Szlachcic", color: "#592703", icon: "ranks/szlachcic.png", className: "rank-szlachcic" };
   }
   if (elo < 2801) {
-    return { name: "Husarz", color: "#c91a1a", icon: "ranks/husarz.png", className: "rank-husarz" };
+    return { name: "Husarz", color: "#b60707", icon: "ranks/husarz.png", className: "rank-husarz" };
   }
   if (elo < 3001) {
     return { name: "Hetman", color: "#731f00", icon: "ranks/hetman.png", className: "rank-hetman" };
@@ -1267,6 +1352,46 @@ document.addEventListener("keydown", e => {
     }
     // ESC dla player modala
     closePlayerModal();
+    // ESC dla FAQ
+    closeFAQ();
+  }
+});
+
+// === FAQ FUNCTIONS ===
+function toggleFAQ() {
+  const faqPanel = document.getElementById('faq-panel');
+  if (!faqPanel) {
+    console.error('FAQ panel element not found');
+    return;
+  }
+  faqPanel.classList.toggle('open');
+  playSound('press.mp3');
+}
+
+function closeFAQ() {
+  const faqPanel = document.getElementById('faq-panel');
+  if (!faqPanel) return;
+  faqPanel.classList.remove('open');
+}
+
+function toggleFAQItem(element) {
+  const faqItem = element.closest('.faq-item');
+  if (faqItem) {
+    faqItem.classList.toggle('active');
+    playSound('press.mp3');
+  }
+}
+
+// Zamknij FAQ gdy klikniesz poza panel
+document.addEventListener('click', (e) => {
+  const faqPanel = document.getElementById('faq-panel');
+  const faqBtn = document.getElementById('faq-btn');
+  const langBtn = e.target.closest('.lang-btn'); // Sprawdź czy klik był na przycisk języka
+  
+  if (faqPanel && faqBtn && !langBtn) { // Nie zamykaj FAQ jeśli klik był na lang-btn
+    if (!faqPanel.contains(e.target) && !faqBtn.contains(e.target)) {
+      closeFAQ();
+    }
   }
 });
 
@@ -1279,6 +1404,11 @@ if (comparisonModal) {
     }
   });
 }
+
+// Upewnij się, że FAQ funkcje są dostępne globalnie
+window.toggleFAQ = toggleFAQ;
+window.closeFAQ = closeFAQ;
+window.toggleFAQItem = toggleFAQItem;
 }
 
 
